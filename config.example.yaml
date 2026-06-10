@@ -1,0 +1,30 @@
+# Copy to ~/.config/wf-tool/config.yaml and edit to match your setup.
+
+settings:
+  worktrees_base: ~/projs   # where workspace directories are created
+  editor: cursor            # "cursor" or "code"
+
+repos:
+  - name: api-server
+    short_id: api
+    path: ~/git/api-server
+    default_branch: main
+    copy_files:
+      - .env
+    bootstrap:
+      - type: run
+        command: uv sync --group canonical
+
+  - name: web-portal
+    short_id: web
+    path: ~/git/web-portal
+    default_branch: main
+    copy_files:
+      - .env
+    bootstrap:
+      - type: run
+        command: uv sync
+        cwd: server/
+      - type: run
+        command: npm install
+        cwd: web/
